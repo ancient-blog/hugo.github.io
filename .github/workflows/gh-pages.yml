@@ -28,4 +28,4 @@ jobs:
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           external_repository: ancient-blog/hugo.github.io
-          publish_branch: productions
+          publish_branch: main
