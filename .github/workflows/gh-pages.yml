@@ -28,4 +28,5 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./public # docs以下にsiteをおいた場合　./docs/publicに変更が必要
+          publish_branch: gh-pages
+          publish_dir: ./public
