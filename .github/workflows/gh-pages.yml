@@ -28,5 +28,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: ancient-blog/hugo.github.io
           publish_branch: gh-pages
           publish_dir: ./public
