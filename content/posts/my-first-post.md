@@ -1,7 +1,8 @@
 +++
 title = "Windows10で公開鍵認証の鍵ペアを生成"
 date = 2023-08-24T14:35:04+09:00
-tags = [""]
+images: ["/images/generate-key-pair-for-public-key-authentication-in-windows10-and-connect-to-server-with-ssh-01.png"]
+tags = ["gitlab"]
 draft = false
 toc = false
 backtotop = false
@@ -12,7 +13,6 @@ backtotop = false
 Windows10にて公開鍵認証の鍵ペアを生成する手順をまとめます。
 
 <!-- toc -->
-
 
 ## 設定する内容
 
