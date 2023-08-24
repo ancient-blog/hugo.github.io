@@ -41,3 +41,8 @@ footnoteReturnLinkContents = "^"
   url = "search"
   weight = 3
 
+[params.logo]
+  url = "icon.png" # static/images/icon.png
+  width = 50
+  height = 50
+  alt = "Logo"
