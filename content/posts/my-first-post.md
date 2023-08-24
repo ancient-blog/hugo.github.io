@@ -1,7 +1,7 @@
 +++
 title = "Windows10で公開鍵認証の鍵ペアを生成"
 date = 2023-08-24T14:35:04+09:00
-tags = [""]
+tags = ["gitlab"]
 draft = false
 toc = false
 backtotop = false
@@ -33,4 +33,6 @@ Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
 ```
 
-![ssh-key](./images/generate-key-pair-for-public-key-authentication-in-windows10-and-connect-to-server-with-ssh-01.png "画像タイトル")
+![ssh-key][1]
+
+[1]: https://ancient-blog.github.io/hugo.github.io/images/generate-key-pair-for-public-key-authentication-in-windows10-and-connect-to-server-with-ssh-01.png
