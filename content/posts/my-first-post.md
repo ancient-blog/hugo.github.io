@@ -33,4 +33,4 @@ Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
 ```
 
-![ssh-key](../images/generate-key-pair-for-public-key-authentication-in-windows10-and-connect-to-server-with-ssh-01.png "画像タイトル")
+![ssh-key](./images/generate-key-pair-for-public-key-authentication-in-windows10-and-connect-to-server-with-ssh-01.png "画像タイトル")
