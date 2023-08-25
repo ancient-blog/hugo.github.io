@@ -115,6 +115,6 @@ jobs:
         uses: actions/deploy-pages@v2
 ```
 
-[1] https://ancient-blog.github.io/hugo.github.io/images/github-actions-beta.PNG
-[2] https://ancient-blog.github.io/hugo.github.io/images/github-hugo-workflow.PNG
-[3] https://ancient-blog.github.io/hugo.github.io/images/github-use-a-suggested-workflow.PNG
+[1]: https://ancient-blog.github.io/hugo.github.io/images/github-actions-beta.PNG
+[2]: https://ancient-blog.github.io/hugo.github.io/images/github-hugo-workflow.PNG
+[3]: https://ancient-blog.github.io/hugo.github.io/images/github-use-a-suggested-workflow.PNG
