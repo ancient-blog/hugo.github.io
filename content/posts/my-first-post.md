@@ -71,10 +71,10 @@ Host github.com
 
 # 公開鍵の登録
 
-* GiHubにログイン
-* GitHubのRepositoriesを選択する
-* [Settings]-[Deploy keys]をクリックする。[Add Deploy key]をクリックする
-* ![add-new-key][3]
+1. GiHubにログイン
+1. GitHubのRepositoriesを選択する
+1. [Settings]-[Deploy keys]をクリックする。[Add Deploy key]をクリックする
+1. ![add-new-key][3]　<br>"Allow write access"にチェックを必ず入れる
 
 
 # 確認方法
