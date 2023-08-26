@@ -1,7 +1,7 @@
 +++
-title = "HugoとGitHub ActionsでGitHub Pagesを自動デプロイ"
+title = "HugoとGitHub ActionsでGitHub Pagesを自動デプロイ(Pushしない方式)"
 date = 2023-08-25T14:39:32+09:00
-tags = ["hugo.github"]
+tags = ["hugo,github"]
 draft = false
 toc = true
 backtotop = false
@@ -10,8 +10,7 @@ backtotop = false
 # Title
 
 HugoとGitHub ActionsでGitHub Pagesを自動デプロイする。
-GitHub Pagesを使用するには、Hugoでビルドした成果物をPushする必要があったが
-github actions betaでは、リポジトリにPushする必要がなくなった。
+GitHub Pagesを使用するには、Hugoでビルドした成果物をPushする必要があったが[github actions beta]では、リポジトリにPushする必要がなくなった。
 
 
 <!-- toc -->
@@ -23,13 +22,16 @@ github actions betaでは、リポジトリにPushする必要がなくなった
 1. Githubにログイン
 1. GitHubのRepositoriesを選択する
 1. [Settings]-[Pages]-[Build and deployment]
-1. github actions betaを選択する。<br>![actions-beta][1]
-1. Hugoのworkflowの[Configure]を選択する<br>![hugo-workflow][2]
+1. [github actions beta]を選択する。
+    * ![actions-beta][1]
+1. Hugoのworkflowの[Configure]を選択する
+    * ![hugo-workflow][2]
 1. Workflowの内容を確認して[Commit changes...]をクリックする
 
 
-### Hugo Wrokflowが表示されない場合
-1. 上記手順で、推奨WorkflowにHugoが表示されない場合<br>![suggested-workflow][3]
+### [github actions beta]を選択した後自動でHugo Wrokflowが表示されない場合
+1. 下の図の様に、推奨WorkflowにHugoが表示されない場合
+    * ![suggested-workflow][3]
 1. [Use a suggested workflow, browse all workflows, or create your own. ]の[browse all workflows]をクリック
 1. [Search workflows]にHugoを入力する
 1. 表示されたHugo Workflowの[Configure]を選択する
@@ -115,6 +117,7 @@ jobs:
         uses: actions/deploy-pages@v2
 ```
 
+#### 詳細
 
 |ジョブ名|ステップ名|説明|
 |:------|:-----|:------|
