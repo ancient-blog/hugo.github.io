@@ -23,8 +23,8 @@ github actions betaでは、リポジトリにPushする必要がなくなった
 1. Githubにログイン
 1. GitHubのRepositoriesを選択する
 1. [Settings]-[Pages]-[Build and deployment]
-1. ![actions-beta][1]<br>github actions betaを選択する。
-1. ![hugo-workflow][2]<br>Hugoのworkflowの[Configure]を選択する
+1. github actions betaを選択する。<br>![actions-beta][1]
+1. Hugoのworkflowの[Configure]を選択する<br>![hugo-workflow][2]
 1. Workflowの内容を確認して[Commit changes...]をクリックする
 
 
@@ -69,7 +69,7 @@ defaults:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # ubuntu最新のDockerイメージを使用する
     env:
       HUGO_VERSION: 0.114.0
     steps:
@@ -107,13 +107,26 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # ubuntu最新のDockerイメージを使用する
     needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
 ```
+
+
+|ジョブ名|ステップ名|説明|
+|:------|:-----|:------|
+|build   |Install Hugo CLI   | HugoのWebサイトからv0.114.0をダウンロードしてインストールする  |
+|   |Install Dart Sass      |Dart Sassのインストール。Sassとは、Webページのレイアウトや修飾情報の指定に用いられるCSS（Cascading Style Sheet）を生成するための言語（メタ言語）の一つです。      |
+|   |Checkout|actions/checkout@v3アクションを利用してリポジトリをチェックアウトします。サブモジュールも含むオプションを指定しています|
+|   |Setup Pages      |actions/configure-pages@v3アクションを利用してpagesの設定が行われます。|
+|   |Install Node.js dependencies      |Node.jsの依存関係をインストールします      |
+|   |Build with Hugo      |Hugoをビルドします      |
+|   |Upload artifact      |actions/upload-pages-artifact@v2アクションを利用して成果物をUploadするように設定されています。このアクションは、ビルドされたウェブぺージや制的なコンテンツをアーティファクトとしてプうロードするために使用します。      |
+|deploy   |Deploy to GitHub Pages   |actions/deploy-pages@v2アクションを利用してデプロイが行われるように設定されています。 GitHub Pagesに自動的にデプロイするために使用します。     |
+
 
 [1]: https://ancient-blog.github.io/hugo.github.io/images/github-actions-beta.PNG
 [2]: https://ancient-blog.github.io/hugo.github.io/images/github-hugo-workflow.PNG
