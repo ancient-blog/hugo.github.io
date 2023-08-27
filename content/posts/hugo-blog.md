@@ -127,7 +127,7 @@ jobs:
 |   |Setup Pages      |actions/configure-pages@v3アクションを利用してpagesの設定が行われます。|
 |   |Install Node.js dependencies      |Node.jsの依存関係をインストールします      |
 |   |Build with Hugo      |Hugoをビルドします      |
-|   |Upload artifact      |actions/upload-pages-artifact@v2アクションを利用して成果物をUploadするように設定されています。このアクションは、ビルドされたウェブぺージや制的なコンテンツをアーティファクトとしてプうロードするために使用します。      |
+|   |Upload artifact      |actions/upload-pages-artifact@v2アクションを利用して成果物をUploadするように設定されています。このアクションは、ビルドされたウェブぺージや制的なコンテンツをアーティファクトとしてアップロードするために使用します。      |
 |deploy   |Deploy to GitHub Pages   |actions/deploy-pages@v2アクションを利用してデプロイが行われるように設定されています。 GitHub Pagesに自動的にデプロイするために使用します。     |
 
 
