@@ -1,7 +1,7 @@
 +++
 title = "HugoとGitHub ActionsでGitHub Pagesを自動デプロイ(Pushしない方式)"
 date = 2023-08-25T14:39:32+09:00
-tags = ["hugo,github"]
+tags = ["hugo","github"]
 draft = false
 toc = true
 backtotop = false
