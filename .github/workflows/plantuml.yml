@@ -15,8 +15,8 @@ defaults:
 
 jobs:
 
-  # Build job
-  build:
+  # Generate plantuml diagrams job
+  generate_puml_diagrams:
     runs-on: ubuntu-latest
 
     steps:
