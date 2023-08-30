@@ -20,12 +20,12 @@ defaults:
 
 jobs:
 
-  call-workflow:
+  plantuml:
     uses: ./.github/workflows/plantuml.yml
   
   test:
     runs-on: ubuntu-latest
-    needs: generate_puml_diagrams
+    needs: plantuml
     steps:
       - name: Checkout
         uses: actions/checkout@v3
