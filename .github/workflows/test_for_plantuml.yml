@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/plantuml.yml'
+      - '.github/workflows/test_for_plantuml.yml'
       - 'content/plantuml/*.puml'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
