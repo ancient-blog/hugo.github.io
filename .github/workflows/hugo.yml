@@ -27,9 +27,13 @@ defaults:
     shell: bash
 
 jobs:
+  # Generate images job
+  generate-images:
+    uses: ./.github/workflows/plantuml.yml
   # Build job
   build:
     runs-on: ubuntu-latest
+    needs: generate-images
     env:
       HUGO_VERSION: 0.114.0
     steps:

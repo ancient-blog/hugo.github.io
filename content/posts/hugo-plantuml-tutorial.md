@@ -7,16 +7,26 @@ toc = false
 backtotop = false
 +++
 
-# Title
-PlantUMLのダイアグラムを生成し、それを画像として保存し、アーティファクトとして管理する
-
+# Hugo + PlantUML + GitHub/ActionsでPlantUML画像を表示する
 
 <!-- toc -->
 
-## Contents
-GitHub Actionsを使用してPlantUMLを画像に変換し、生成された成果物をアップロードするための手順を示します。
+## はじめに
 
-##### ディレクトリ構成
+1. **Hugoのワークフロー（hugo.yml）内でPlantUMLワークフローを呼び出す**:<br>
+    Hugoのワークフロー内で、PlantUMLを画像に変換し、成果物を生成するPlantUMLワークフロー（plantuml.yml）を呼び出します。これにより、PlantUMLの実行と成果物の生成がトリガーされます。
+1. **PlantUMLワークフロー（plantuml.yml）の実行**:<br>
+    PlantUMLワークフロー内で、PlantUMLコードを画像に変換し、生成された画像を成果物としてアップロードします。PlantUMLワークフロー内で実行するステップは次のようになります：
+    * PlantUMLコードを画像に変換
+    * 生成された画像を成果物として保存
+1. **Hugoワークフローで成果物をダウンロード**:<br>
+    Hugoのワークフロー内で、PlantUMLワークフローで生成された成果物をダウンロードします。GitHub Actionsの仕様により、同じワークフロー内で生成された成果物は他のステップから利用できます。
+1. **アップロードされた成果物の活用**:<br>
+    ダウンロードした成果物は、Hugoを使用して構築されたウェブサイトのコンテンツとして活用できます。生成されたPlantUMLの画像は、ウェブページ上に表示されたり、ドキュメントとして利用される可能性があります。
+
+これにより、GitHub Actionsを介してPlantUMLを使用して画像を生成し、それをウェブサイトの成果物として活用する一連の手順が実現されます。
+
+### ディレクトリ構成
 ```directory
 ├── content
 │   ├── posts
@@ -30,24 +40,23 @@ GitHub Actionsを使用してPlantUMLを画像に変換し、生成された成�
 │   └── test.png ②成果物として保存(plantuml.yml)
 ```
 
-##### 手順
+### ワークフロー図
 
-1. GitHub Actionsワークフローファイルの設定:
+![GitHub_Actions_PlantUML_Workflow](https://ancient-blog.github.io/hugo.github.io/images/plantuml/GitHub_Actions_PlantUML_Workflow.png)
+
+## 手順
+
+1. **plantuml.yml作成**:
     * PlantUMLの画像を生成しアップロードするためのワークフローファイル（例: .github/workflows/plantuml.yml）を作成します。
 
 ```yaml:plantuml.yml
 name: PlantUML to Image and Artifact
 
 on:
-  push:
-    paths:
-      - '.github/workflows/plantuml.yml'
-      - 'content/plantuml/*.puml'
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_call:
 
 env:
-  PLANT_UML_PATH: content/plantuml　
+  PLANT_UML_PATH: content/plantuml
   IMGES_PATH: content/images
   ARTIFACT: artifact
 
@@ -58,8 +67,8 @@ defaults:
 
 jobs:
 
-  # Build job
-  build:
+  # Generate plantuml diagrams job
+  generate_puml_diagrams:
     runs-on: ubuntu-latest
 
     steps:
@@ -84,30 +93,20 @@ jobs:
 
 * 上記のワークフローファイルは、holowinski/plantuml-github-action@mainアクションを使用してPlantUMLを画像に変換し、contents/plantuml/ ディレクトリに生成された画像をartifact/にコピーして保存します。その後、actions/upload-artifact@v2 アクションを使用して artifact/ ディレクトリ内の成果物をアップロードします。
 
-2. PlantUMLを作成します。
-    * /content/post/plantuml/にtest.pumlを作成します。
-
-```plantuml:test.puml
-@startuml
-class Car {
-  + speed: int
-  + accelerate(): void
-  + brake(): void
-}
-
-class Driver {
-  + name: string
-  + drive(car: Car): void
-}
-
-Car --|> Driver
-@enduml
-```  
-
-3. Hugoワークフローの設定
-    * Hugoビルド用のワークフローファイル（例: .github/workflows/hugo.yml）にアップロードした画像をダウンロードする処理を追加します。
+2. **hugo.ymlの設定**:
+    * Hugoビルド用のワークフローファイル（例: .github/workflows/hugo.yml）にplantuml.ymlを呼び出し、artifactをダウンロードする処理を追加します。
 
 ```diff_yaml:hugo.yml
+jobs:
++  # Generate images job
++  generate-images:
++    uses: ./.github/workflows/plantuml.yml
+  # Build job
+  build:
+    runs-on: ubuntu-latest
++    needs: generate-images
+
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -122,11 +121,3 @@ Car --|> Driver
 * 上記ワークフローは、Hugoビルドワークフローに追加します。
 actions/download-artifact@v3アクションを使用して/content/images/plantuml/に成果物をダウンロードします。
 * Hugoサイトのコンテンツディレクトリ内に、アップロードされた画像を表示するためのコードを含む記事ファイルを作成します。
-
-4. PlantUMLの画像をHugoで表示:
-    * HugoのコンテンツフォルダにPlantUMLの画像を配置し、Hugoのテンプレートを使用して画像を表示します。生成された画像はアップロードされた成果物から取得できるようになります。
-    * [https://ancient-blog.github.io/hugo.github.io/images/plantuml/test.png](https://ancient-blog.github.io/hugo.github.io/images/plantuml/test.png)
-
-### ハマったところ
-
-Github actions の"env:"でしてした変数は、"run"では設定した値を返してくれるが、"path"では値を返さない。仮対策として変数を使わずに直接パスを指定してる。

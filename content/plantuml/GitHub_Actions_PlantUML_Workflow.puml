@@ -1,0 +1,30 @@
+@startuml
+
+usecase "artifact" as AF
+usecase "Start Github actions" as Start
+
+left to right direction
+package hugo.yml {
+  usecase "workflow call" as GI
+  usecase "[job]build:" as b
+
+}
+package plantuml.yml {
+  usecase "[job]generate_puml_diagrams" as GPD
+
+
+}
+Start -> GI
+GI --> GPD
+GI . b
+
+
+note "Upload Artifact" as N1
+GPD .. N1
+N1 ..> AF
+
+note "Download Artifact" as N2
+AF .. N2
+N2 ..> b
+
+@enduml
