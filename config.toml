@@ -1,5 +1,5 @@
 theme = "harbor"
-baseurl = "https://example.com/"
+baseurl = "https://ancient-blog.github.io/hugo.github.io/"
 title = "Hugo Themes"
 paginate = 3
 languageCode = "en"
@@ -8,7 +8,7 @@ enableInlineShortcodes = true
 footnoteReturnLinkContents = "^"
 
 [Author]
-  name = "Hugo Author"
+  name = "ancient-blog"
 
 [outputs]
   section = ["JSON", "HTML"]
@@ -17,7 +17,7 @@ footnoteReturnLinkContents = "^"
   identifier = "about"
   name = "About"
   icon = "fas fa-user fa-lg"
-  url = "/about/"
+  url = "/hugo.github.io/about/"
   weight = 3
 
 [[params.nav]]
@@ -46,3 +46,6 @@ footnoteReturnLinkContents = "^"
   width = 50
   height = 50
   alt = "Logo"
+
+[params]
+  enableBottomNavigation = true
