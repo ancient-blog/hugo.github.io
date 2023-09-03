@@ -7,6 +7,10 @@ DefaultContentLanguage = "en"
 enableInlineShortcodes = true
 footnoteReturnLinkContents = "^"
 
+# Optional
+# If you use googleAnalytics, you set top-level options in config.toml to the beginning of the config file like other top-level options.
+googleAnalytics = "G-1ERCREV08B"
+
 [Author]
   name = "ancient-blog"
 
