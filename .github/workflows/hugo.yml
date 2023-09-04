@@ -47,6 +47,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: To set up Google Analytics tracking code in a Hugo website's config.toml file.
+        run: |
+          sed -i s/G-XXXXXXXXXX/${{ vars.GOOGLE_ANALYTICS_TRACKING_CODE }}/ config.toml
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
