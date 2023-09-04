@@ -1,0 +1,47 @@
+name: Deploy Hugo site to Pages for test 
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["topic/#14"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # test job
+  test:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.114.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set google analitics tracking code
+        run: |
+          sed s/G-XXXXXXXXXX/${{ secrets.GOOGLE_ANALYTICS_TRACKING_CODE }}/ config.toml
+      - name: Display config.toml
+        run: |
+          cat config.toml
+
+
+
+
+
