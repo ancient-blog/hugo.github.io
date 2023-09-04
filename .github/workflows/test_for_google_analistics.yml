@@ -34,9 +34,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set google analitics tracking code
+      - name: To set up Google Analytics tracking code in a Hugo website's config.toml file.
         run: |
-          sed s/G-XXXXXXXXXX/${{ secrets.GOOGLE_ANALYTICS_TRACKING_CODE }}/ config.toml
+          sed -i s/G-XXXXXXXXXX/${{ secrets.GOOGLE_ANALYTICS_TRACKING_CODE }}/ config.toml
       - name: Display config.toml
         run: |
           cat config.toml
