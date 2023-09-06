@@ -17,7 +17,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # コードをチェックアウト
-
+      - name: install curl # curlをインストールする
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl
       - name: Start Docker container
         run: |
           docker run -d --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
