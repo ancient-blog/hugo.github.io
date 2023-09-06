@@ -24,8 +24,9 @@ jobs:
         continue-on-error: true  # コンテナの起動が失敗しても続行
 
       - name: Pre-test
-        echo 'おはようございます。こんにちは。こんばんは。車' > text.txt
-        cat text.txt
+        run: |
+          echo 'おはようございます。こんにちは。こんばんは。車' > text.txt
+          cat text.txt
       - name: Run tests
         run: |
           curl -s -X POST "localhost:50021/audio_query?speaker=1" --get --data-urlencode text@text.txt > query.json
