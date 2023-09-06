@@ -20,7 +20,7 @@ jobs:
 
       - name: Start Docker container
         run: |
-          docker run -d --name voicevos:cpu:latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          docker run -d --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
         continue-on-error: true  # コンテナの起動が失敗しても続行
 
       - name: Pre-test
@@ -41,5 +41,5 @@ jobs:
           if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
       - name: Stop Docker container
         run: |
-          docker stop voicevos:cpu:latest  # Dockerコンテナを停止
-          docker rm voicevos:cpu:latest    # Dockerコンテナを削除
+          docker stop voicevos-cpu-latest  # Dockerコンテナを停止
+          docker rm voicevos-cpu-latest    # Dockerコンテナを削除
