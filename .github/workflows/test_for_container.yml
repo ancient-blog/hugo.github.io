@@ -1,0 +1,44 @@
+name: Container Tests
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["topic/#17"]
+jobs:
+  test:
+    runs-on: ubuntu-latest  # テストランナーをUbuntuで実行
+    
+    services:
+      my-container:
+        image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest #指定のdockerイメージを使用
+        ports:
+          - 50021/tcp  # 必要なポートを公開（必要に応じて変更）
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # コードをチェックアウト
+
+      - name: Start Docker container
+        run: |
+          docker run -d --name voicevos:cpu:latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+        continue-on-error: true  # コンテナの起動が失敗しても続行
+
+      - name: Pre-test
+        echo 'おはようございます。こんにちは。こんばんは。車' > text.txt
+        cat text.txt
+      - name: Run tests
+        run: |
+          curl -s -X POST "localhost:50021/audio_query?speaker=1" --get --data-urlencode text@text.txt > query.json
+          cat query.json
+          curl -s -H "Content-Type: application/json" -X POST -d @query.json "localhost:50021/synthesis?speaker=1" > audio.wav
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: voicevox-data
+          path: |
+            ${{ github.workspace }}/*.wav
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
+      - name: Stop Docker container
+        run: |
+          docker stop voicevos:cpu:latest  # Dockerコンテナを停止
+          docker rm voicevos:cpu:latest    # Dockerコンテナを削除
