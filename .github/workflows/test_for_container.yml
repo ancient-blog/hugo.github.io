@@ -30,13 +30,15 @@ jobs:
           echo "================================="
           docker inspect -f '{{.NetworkSettings.Networks}}' voicevox-cpu-latest
           echo "================================="
+          ping -c 3 172.81.0.3
+
       - name: Pre-test
         run: |
           echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
           cat text.txt
       - name: Create query.json 
         run: |
-          curl -s \
+          curl -v \
             -X POST \
             "172.81.0.3:50021/audio_query?speaker=1" \
             --get --data-urlencode text@text.txt \
