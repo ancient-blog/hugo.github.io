@@ -21,7 +21,14 @@ jobs:
       - name: Check Docker containers running
         run: |
           docker ps -a
+          echo "================================="
           docker-compose ps
+          echo "================================="
+          ifconfig
+          echo "================================="
+          docker network ls
+          echo "================================="
+          docker inspect -f '{{.NetworkSettings.Networks}}' voicevox-cpu-latest
       - name: Pre-test
         run: |
           echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
