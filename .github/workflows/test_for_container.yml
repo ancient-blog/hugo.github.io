@@ -23,18 +23,32 @@ jobs:
           sudo apt-get install -y curl
       - name: Start Docker container
         run: |
-          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest --net=host voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          ifconfig
         continue-on-error: true  # コンテナの起動が失敗しても続行
-
+      - name: Check Docker containers running
+        run: |
+          docker ps -a
       - name: Pre-test
         run: |
-          echo 'おはようございます。こんにちは。こんばんは。車' > text.txt
+          echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
           cat text.txt
-      - name: Run tests
+      - name: Create query.json 
         run: |
-          curl -s -X POST "localhost:50021/audio_query?speaker=1" --get --data-urlencode text@text.txt > query.json
-          cat query.json
-          curl -s -H "Content-Type: application/json" -X POST -d @query.json "localhost:50021/synthesis?speaker=1" > audio.wav
+          curl -s \
+            -X POST \
+            "localhost:50021/audio_query?speaker=1" \
+            --get --data-urlencode text@text.txt \
+            > query.json      
+          cat query.json | grep -o -E "\"kana\":\".*\""
+      - name: Create audio.wav
+        run: |
+          curl -s \
+            -H "Content-Type: application/json" \
+            -X POST \
+            -d @newquery.json \
+            "localhost:50021/synthesis?speaker=1" \
+            > audio.wav
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
