@@ -10,7 +10,6 @@ jobs:
     
     services:
       my-container:
-        container_name: voicevox-cpu-latest # コンテナに名前を付ける
         image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest #指定のdockerイメージを使用
         ports:
           - 50021/tcp  # 必要なポートを公開（必要に応じて変更）
@@ -22,11 +21,6 @@ jobs:
 #        run: |
 #          sudo apt-get update
 #          sudo apt-get install -y curl
-      - name: Start Docker container
-        run: |
-          docker ps -a
-          ifconfig
-          docker network ls
       - name: Check Docker containers running
         run: |
           docker ps -a
@@ -59,5 +53,5 @@ jobs:
           if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
       - name: Stop Docker container
         run: |
-          docker stop voicevos-cpu-latest  # Dockerコンテナを停止
-          docker rm voicevos-cpu-latest    # Dockerコンテナを削除
+          docker stop voicevox-cpu-latest  # Dockerコンテナを停止
+          docker rm voicevox-cpu-latest    # Dockerコンテナを削除
