@@ -17,21 +17,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # コードをチェックアウト
-      - name: install curl # curlをインストールする
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
+#      - name: install curl # curlをインストールする
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install -y curl
       - name: Start Docker container
         run: |
+          docker ps -a
           docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          docker ps -a
           ifconfig
           docker network ls
       - name: Check ipaddress
         run: |
           ifconfig
-          ping -n 3 localhost
-          ping -n 3 172.17.0.1
-          ping -n 3 172.18.0.1
+          ping -t 3 localhost
+          ping -t 3 172.17.0.1
+          ping -t 3 172.18.0.1
         continue-on-error: true  # コンテナの起動が失敗しても続行
       - name: Check Docker containers running
         run: |
