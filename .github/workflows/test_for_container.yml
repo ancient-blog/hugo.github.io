@@ -23,8 +23,15 @@ jobs:
           sudo apt-get install -y curl
       - name: Start Docker container
         run: |
-          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest --net=host voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
           ifconfig
+          docker network ls
+      - name: Check ipaddress
+        run: |
+          ifconfig
+          ping -n 3 localhost
+          ping -n 3 172.17.0.1
+          ping -n 3 172.18.0.1
         continue-on-error: true  # コンテナの起動が失敗しても続行
       - name: Check Docker containers running
         run: |
