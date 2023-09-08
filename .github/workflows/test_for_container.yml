@@ -28,8 +28,6 @@ jobs:
           echo "================================="
           docker network ls
           echo "================================="
-          docker network inspect mynetwork
-          echo "================================="
           docker inspect -f '{{.NetworkSettings.Networks}}' voicevox-cpu-latest
           echo "================================="
       - name: Pre-test
