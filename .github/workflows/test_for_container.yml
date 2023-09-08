@@ -8,22 +8,20 @@ jobs:
   test:
     runs-on: ubuntu-latest  # テストランナーをUbuntuで実行
     
-    services:
-      my-container:
-        image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest #指定のdockerイメージを使用
-        ports:
-          - 50021/tcp  # 必要なポートを公開（必要に応じて変更）
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # コードをチェックアウト
-#      - name: install curl # curlをインストールする
-#        run: |
-#          sudo apt-get update
-#          sudo apt-get install -y curl
+      # Docker Set Up
+      - name: Docker Set Up
+        # Docker Composeを使用してコンテナをバックグラウンドで起動します。
+        run: |
+          docker-compose \
+          up -d \
+          --build
       - name: Check Docker containers running
         run: |
           docker ps -a
+          docker-compose ps
       - name: Pre-test
         run: |
           echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
@@ -53,5 +51,4 @@ jobs:
           if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
       - name: Stop Docker container
         run: |
-          docker stop voicevox-cpu-latest  # Dockerコンテナを停止
-          docker rm voicevox-cpu-latest    # Dockerコンテナを削除
+          docker-compose down
