@@ -10,7 +10,6 @@ jobs:
     
     services:
       my-container:
-        container_name: my-voicevox-container
         image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest #指定のdockerイメージを使用
         ports:
           - 50021/tcp  # 必要なポートを公開（必要に応じて変更）
@@ -25,11 +24,17 @@ jobs:
       - name: Start Docker container
         run: |
           docker ps -a
-#          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
-#          docker ps -a
+          docker run -d -p '127.0.0.1:50021:50021' --name voicevos-cpu-latest voicevox/voicevox_engine:cpu-ubuntu20.04-latest # Dockerコンテナを起動
+          docker ps -a
           ifconfig
           docker network ls
-#        continue-on-error: true  # コンテナの起動が失敗しても続行
+      - name: Check ipaddress
+        run: |
+          ifconfig
+          ping -t 3 localhost
+          ping -t 3 172.17.0.1
+          ping -t 3 172.18.0.1
+        continue-on-error: true  # コンテナの起動が失敗しても続行
       - name: Check Docker containers running
         run: |
           docker ps -a
