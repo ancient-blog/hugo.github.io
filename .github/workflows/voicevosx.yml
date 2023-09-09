@@ -29,18 +29,18 @@ jobs:
           docker ps -a
           docker-compose ps
           ping -c 3 172.81.0.3
+      - name: Create Destination Folder
+        run: mkdir -p ${ARTIFACT}  # フォルダを作成  
       - name: Prepare a shell script  
         run: |
           mv ./content/voicevox/voicevox.sh .
           chmod +x voicevox.sh
       - name: Run a shell script 
-        run: |         
+        run: |
+          ls -l
           ./voicevox.sh
           ls -l
-      - name: Create Destination Folder
-        run: mkdir -p ${ARTIFACT}  # フォルダを作成  
-      - name: Copy Files
-        run: cp ${{ github.workspace }}/*.wav ${ARTIFACT}/  # ファイルをコピー
+          cat query.json
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
