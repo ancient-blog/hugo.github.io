@@ -39,6 +39,7 @@ jobs:
         run: |         
           ./voicevox.sh
           ls -l 
+          cat test.log
       - name: Copy Files
         run: |
           cp ${{ github.workspace }}/*.wav ${ARTIFACT}/  # ファイルをコピー

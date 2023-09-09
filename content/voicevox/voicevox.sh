@@ -2,7 +2,7 @@
 
 for filename in $(ls ./content/voicevox/*.txt)
 do
-
+{
 #jsonファイルの作成
 curl -s \
     -X POST \
@@ -20,5 +20,5 @@ curl -s \
     
 #wavファイルのリネーム
 mv audio.wav "${filename}.wav"
-
+} > ${filename}.log
 done
