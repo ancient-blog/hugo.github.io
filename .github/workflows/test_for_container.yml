@@ -18,26 +18,17 @@ jobs:
           docker-compose \
           up -d \
           --build
-      - name: Check Docker containers running
+      - name: Check docker containers running
         run: |
           docker ps -a
-          echo "================================="
-          docker-compose ps
-          echo "================================="
-          ifconfig
-          echo "================================="
-          docker network ls
-          echo "================================="
-          docker inspect -f '{{.NetworkSettings.Networks}}' voicevox-cpu-latest
-          echo "================================="
           ping -c 3 172.81.0.3
+          ls ./content/voicevox/*.txt
       - name: Pre-test
         run: |
           echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
-          cat text.txt
       - name: Create query.json 
         run: |
-          curl -v \
+          curl -s \
             -X POST \
             "localhost:50021/audio_query?speaker=1" \
             --get --data-urlencode text@text.txt \
@@ -45,19 +36,23 @@ jobs:
           cat query.json | grep -o -E "\"kana\":\".*\""
       - name: Create audio.wav
         run: |
-          curl -v \
+          curl -s \
             -H "Content-Type: application/json" \
             -X POST \
             -d @query.json \
             "localhost:50021/synthesis?speaker=1" \
             > audio.wav
-          ls -l
+      - name: Run a shell script with test 
+        run: |
+          mv ./content/voicevox/voicevox.sh .
+          chmod +x voicevox.sh
+          ./voicevox.sh
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: voicevox-data
           path: |
-            audio.wav
+            *.wav
           if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
       - name: Stop Docker container
         run: |
