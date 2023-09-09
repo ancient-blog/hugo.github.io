@@ -36,10 +36,11 @@ jobs:
       - name: Run a shell script 
         run: |         
           ./voicevox.sh
+          ls -l
       - name: Create Destination Folder
         run: mkdir -p ${ARTIFACT}  # フォルダを作成  
       - name: Copy Files
-        run: cp *.wav ${ARTIFACT}/  # ファイルをコピー
+        run: cp ${{ github.workspace }}/*.wav ${ARTIFACT}/  # ファイルをコピー
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
