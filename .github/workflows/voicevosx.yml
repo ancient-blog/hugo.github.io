@@ -1,0 +1,49 @@
+name: Voicevox Audio Generator
+
+on:
+  workflow_call:
+
+env:
+  ARTIFACT: artifact
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # Generate Audio Generator
+  generate_audio_generator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker Set Up
+        # Docker Composeを使用してコンテナをバックグラウンドで起動します。
+        run: |
+          docker-compose \
+          up -d \
+          --build
+      - name: Check docker containers running
+        run: |
+          docker ps -a
+          docker-compose ps
+          ping -c 3 172.81.0.3
+      - name: Prepare a shell script  
+        run: |
+          mv ./content/voicevox/voicevox.sh .
+          chmod +x voicevox.sh
+      - name: Run a shell script 
+        run: |         
+          ./voicevox.sh
+      - name: Create Destination Folder
+        run: mkdir -p ${ARTIFACT}  # フォルダを作成  
+      - name: Copy Files
+        run: cp *.wav ${ARTIFACT}/  # ファイルをコピー
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: voicevox-data
+          path: |
+            ${{ github.workspace }}/artifact
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`

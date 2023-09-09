@@ -5,55 +5,22 @@ on:
   push:
     branches: ["topic/#17"]
 jobs:
+
+  call-voicevosx-workflow:
+    uses: ./.github/workflows/voicevosx.yml
+
   test:
-    runs-on: ubuntu-latest  # テストランナーをUbuntuで実行
-    
+    runs-on: ubuntu-latest
+    needs: call-voicevosx-workflow
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # コードをチェックアウト
-      # Docker Set Up
-      - name: Docker Set Up
-        # Docker Composeを使用してコンテナをバックグラウンドで起動します。
-        run: |
-          docker-compose \
-          up -d \
-          --build
-      - name: Check docker containers running
-        run: |
-          docker ps -a
-          ping -c 3 172.81.0.3
-          ls ./content/voicevox/*.txt
-      - name: Pre-test
-        run: |
-          echo -n 'おはようございます。こんにちは。こんばんは。車' > text.txt
-      - name: Create query.json 
-        run: |
-          curl -s \
-            -X POST \
-            "localhost:50021/audio_query?speaker=1" \
-            --get --data-urlencode text@text.txt \
-            > query.json      
-          cat query.json | grep -o -E "\"kana\":\".*\""
-      - name: Create audio.wav
-        run: |
-          curl -s \
-            -H "Content-Type: application/json" \
-            -X POST \
-            -d @query.json \
-            "localhost:50021/synthesis?speaker=1" \
-            > audio.wav
-      - name: Run a shell script with test 
-        run: |
-          mv ./content/voicevox/voicevox.sh .
-          chmod +x voicevox.sh
-          ./voicevox.sh
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
-          name: voicevox-data
-          path: |
-            *.wav
-          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
-      - name: Stop Docker container
-        run: |
-          docker-compose down
+          path: ${{ github.workspace }}/data/voiceclips/
+          name: voicevox-data 
+      - name: Display structure of downloaded files
+        run: ls -l
+        working-directory: ${{ github.workspace }}/data/voiceclips/
+    
