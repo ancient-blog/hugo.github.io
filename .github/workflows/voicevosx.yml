@@ -6,44 +6,67 @@ on:
 env:
   ARTIFACT: artifact
   VOICEVOX_PATH: content/voicevox
-
-# Default to bash
-defaults:
-  run:
-    shell: bash
+  DOCKER_BUILDKIT: 1  # Dockerビルドキットを有効にする
 
 jobs:
-  # Generate Audio Generator
-  generate_audio_generator:
+  generate_voicevox_audio:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Check for File Changes
+        id: file_changes
+        run: |
+          if [[ $(git diff --name-only ${{ github.event.before }} ${{ github.sha }}) =~ ^content/voicevox/.*\.txt$ ]]; then
+            echo "Text files have changed, triggering the script."
+            echo "::set-output name=trigger::true"
+          else
+            echo "No changes in text files, skipping the script."
+            echo "::set-output name=trigger::false"
+          fi
+
       - name: Docker Set Up
-        # Docker Composeを使用してコンテナをバックグラウンドで起動します。
+        if: steps.file_changes.outputs.trigger == 'true'
         run: |
-          docker-compose \
-          up -d \
-          --build
-      - name: Check docker containers running
-        run: |
+          docker-compose up -d --build
           docker ps -a
           docker-compose ps
           ping -c 3 172.81.0.3
+
+      - name: Download artifact
+        if: steps.file_changes.outputs.trigger == 'true'
+        uses: actions/download-artifact@v3
+        with:
+          path: ${{ github.workspace }}/artifact
+          name: voicevox-data 
+
       - name: Create Destination Folder
-        run: mkdir -p ${ARTIFACT}  # フォルダを作成 
-      - name: Prepare a shell script  
+        if: steps.file_changes.outputs.trigger == 'true'
+        run: |
+          if [ ! -d "${ARTIFACT}" ]; then
+            mkdir -p "${ARTIFACT}"
+          else
+            echo "Folder ${ARTIFACT} already exists."
+          fi
+      - name: Prepare a Shell Script
+        if: steps.file_changes.outputs.trigger == 'true'
         run: |
           mv ./content/voicevox/voicevox.sh .
           chmod +x voicevox.sh
-      - name: Run a shell script 
-        run: |         
-          ./voicevox.sh
-          ls -l 
-      - name: Copy Files
+
+      - name: Run the Shell Script
+        if: steps.file_changes.outputs.trigger == 'true'
         run: |
-          cp ${{ github.workspace }}/${VOICEVOX_PATH}/*.wav ${ARTIFACT}/  # ファイルをコピー
-      - name: Upload artifact
+          ./voicevox.sh
+          ls -l
+
+      - name: Copy Files
+        if: steps.file_changes.outputs.trigger == 'true'
+        run: |
+          cp ${{ github.workspace }}/${VOICEVOX_PATH}/*.wav ${ARTIFACT}/
+
+      - name: Upload Artifact
+        if: steps.file_changes.outputs.trigger == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: voicevox-data

@@ -18,9 +18,9 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          path: ${{ github.workspace }}/data/voiceclips/
+          path: ${{ github.workspace }}/content/voicevox/
           name: voicevox-data 
       - name: Display structure of downloaded files
         run: ls -l
-        working-directory: ${{ github.workspace }}/data/voiceclips/
+        working-directory: ${{ github.workspace }}/content/voicevox/
     
