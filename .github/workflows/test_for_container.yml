@@ -9,7 +9,7 @@ jobs:
   pre-test:
     runs-on: ubuntu-latest
     env:
-      YOUR_PAT: ${{ secret.ANCIENT_BLOG_PAT}}
+      YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
       YOUR_OWNER: ancient-blog
       YOUR_REPO: hugo.github.io
       YOUR_ARTIFACT_ID: voicevox-data
