@@ -23,10 +23,13 @@ do
 
     echo "Created audio.wav for $filename"
 
-    # wavファイルのリネーム
-    mv audio.wav "${filename.replace(".txt", "")}.wav"
+    # 拡張子.txtを削除して新しい変数に格納
+    filename_without_extension=$(echo "$filename" | sed 's/\.txt$//')
 
-    echo "Renamed audio.wav to ${filename.replace(".txt", "")}.wav"
+    # wavファイルのリネーム
+    mv audio.wav "${filename_without_extension}.wav"
+
+    echo "Renamed audio.wav to ${filename_without_extension}.wav"
 
     echo "Finished processing $filename"
 done
