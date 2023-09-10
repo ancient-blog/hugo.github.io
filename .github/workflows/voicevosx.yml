@@ -24,7 +24,9 @@ jobs:
 
       - name: Create Destination Folder
         run: |
-          mkdir -p "${ARTIFACT}"
+          if [ ! -d "${ARTIFACT}" ]; then
+            mkdir -p "${ARTIFACT}"
+          fi
 
       - name: Prepare a Shell Script
         run: |
@@ -38,7 +40,11 @@ jobs:
 
       - name: Copy Files
         run: |
-          cp ${{ github.workspace }}/${VOICEVOX_PATH}/*.wav ${ARTIFACT}/
+          if [ -n "$(find "${{ github.workspace }}/${VOICEVOX_PATH}" -maxdepth 1 -type f -name '*.wav')" ]; then
+            cp "${{ github.workspace }}/${VOICEVOX_PATH}"/*.wav "${ARTIFACT}/"
+          else
+            echo "No .wav files found. Skipping copy."
+          fi
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
