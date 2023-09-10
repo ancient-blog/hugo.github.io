@@ -23,7 +23,7 @@ jobs:
             --output artifacts.zip \
             "https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts/${YOUR_ARTIFACT_ID}/zip"
           ls -lh
-          cat artifact.zip
+          cat artifacts.zip
         continue-on-error: true  # 初回で成果物がない場合エラーを許可します
       - name: Unzip Artifact
         run: |
