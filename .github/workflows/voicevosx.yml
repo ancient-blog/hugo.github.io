@@ -14,19 +14,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Check for File Changes
         id: file_changes
         run: |
           if [[ $(git diff --name-only ${{ github.event.before }} ${{ github.sha }}) =~ ^content/voicevox/.*\.txt$ ]]; then
             echo "Text files have changed, triggering the script."
-            echo "::set-output name=trigger::true"
+            echo "trigger=true" >> $GITHUB_ENV  # 環境ファイルに変数を設定
           else
             echo "No changes in text files, skipping the script."
-            echo "::set-output name=trigger::false"
+            echo "trigger=false" >> $GITHUB_ENV  # 環境ファイルに変数を設定
           fi
 
       - name: Docker Set Up
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         run: |
           docker-compose up -d --build
           docker ps -a
@@ -34,14 +35,14 @@ jobs:
           ping -c 3 172.81.0.3
 
       - name: Download artifact
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         uses: actions/download-artifact@v3
         with:
           path: ${{ github.workspace }}/artifact
           name: voicevox-data 
 
       - name: Create Destination Folder
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         run: |
           if [ ! -d "${ARTIFACT}" ]; then
             mkdir -p "${ARTIFACT}"
@@ -49,24 +50,24 @@ jobs:
             echo "Folder ${ARTIFACT} already exists."
           fi
       - name: Prepare a Shell Script
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         run: |
           mv ./content/voicevox/voicevox.sh .
           chmod +x voicevox.sh
 
       - name: Run the Shell Script
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         run: |
           ./voicevox.sh
           ls -l
 
       - name: Copy Files
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         run: |
           cp ${{ github.workspace }}/${VOICEVOX_PATH}/*.wav ${ARTIFACT}/
 
       - name: Upload Artifact
-        if: steps.file_changes.outputs.trigger == 'true'
+        if: env.trigger == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: voicevox-data
