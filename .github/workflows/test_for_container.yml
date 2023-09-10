@@ -6,7 +6,23 @@ on:
     branches: ["topic/#17"]
 jobs:
 
+  pre-test:
+    runs-on: ubuntu-latest
+    env:
+      YOUR_PAT: ${{ secret.ANCIENT_BLOG_PAT}}
+      YOUR_OWNER: ancient-blog
+      YOUR_REPO: hugo.github.io
+      YOUR_ARTIFACT_ID: voicevox-data
+    steps:
+      - name: To get artifacts using the GitHub API
+        run: |
+          curl --header "Authorization: Bearer ${YOUR_PAT}" \
+            --header "Accept: application/vnd.github.v3+json" \
+            --output artifacts.zip \
+            "https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts/${YOUR_ARTIFACT_ID}/zip"
+
   call-voicevosx-workflow:
+    needs: pre-test
     uses: ./.github/workflows/voicevosx.yml
 
   test:
