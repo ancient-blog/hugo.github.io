@@ -22,19 +22,10 @@ jobs:
           docker-compose ps
           ping -c 3 172.81.0.3
 
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          path: ${{ github.workspace }}/artifact
-          name: voicevox-data 
-
       - name: Create Destination Folder
         run: |
-          if [ ! -d "${ARTIFACT}" ]; then
-            mkdir -p "${ARTIFACT}"
-          else
-            echo "Folder ${ARTIFACT} already exists."
-          fi
+          mkdir -p "${ARTIFACT}"
+
       - name: Prepare a Shell Script
         run: |
           mv ./content/voicevox/voicevox.sh .
