@@ -5,7 +5,7 @@ on:
 
 env:
   ARTIFACT: artifact
-  PATH: content/voicevox
+  VOICEVOX_PATH: content/voicevox
 
 # Default to bash
 defaults:
@@ -42,7 +42,7 @@ jobs:
           ls -l 
       - name: Copy Files
         run: |
-          cp ${{ github.workspace }}/${PATH}/*.wav ${ARTIFACT}/  # ファイルをコピー
+          cp ${{ github.workspace }}/${VOICEVOX_PATH}/*.wav ${ARTIFACT}/  # ファイルをコピー
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
