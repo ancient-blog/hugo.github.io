@@ -11,7 +11,7 @@ do
         # jsonファイルの作成
         curl -s \
             -X POST \
-            "localhost:50021/audio_query?speaker=1" \
+            "localhost:50021/audio_query?speaker=3" \
             --get --data-urlencode text@"$filename" \
             > query.json
 
@@ -22,7 +22,7 @@ do
             -H "Content-Type: application/json" \
             -X POST \
             -d @query.json \
-            "localhost:50021/synthesis?speaker=1" \
+            "localhost:50021/synthesis?speaker=3" \
             > audio.wav
 
         echo "Created audio.wav for $filename"
