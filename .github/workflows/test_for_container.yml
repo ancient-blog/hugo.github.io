@@ -16,6 +16,10 @@ jobs:
       YOUR_ARTIFACT_NAME: voicevox-data
       VOICEVOX_PATH: content/voicevox
     steps:
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: jq -n env
       - name: Get Artifacts using the GitHub API
         run: |
           # GitHub APIからarchive_download_urlを取得
