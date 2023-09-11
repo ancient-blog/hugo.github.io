@@ -18,38 +18,15 @@ jobs:
     steps:
       - name: Get Artifacts using the GitHub API
         run: |
-          curl -L \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${YOUR_PAT}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts" > artifacts.json
+          # GitHub APIからarchive_download_urlを取得
+          archive_download_url=$(curl -s -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${YOUR_PAT}" "https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts" | jq -r '.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'") | .archive_download_url')
+          if [ -z "$archive_download_url" ]; then
+            echo "No matching artifacts found for ${YOUR_ARTIFACT_NAME}"
+            exit 1
+          fi
 
-          # JSONデータを解析し、nameで検索して一致する最新のrepository_idを取得
-          const data = require('./artifacts.json');
-          const searchName = '${YOUR_ARTIFACT_NAME}';
-
-          const matchingArtifacts = data.artifacts.filter(artifact => artifact.name === searchName);
-
-          if (matchingArtifacts.length > 0) {
-            const latestArtifact = matchingArtifacts.reduce((prev, current) => (
-              new Date(current.updated_at) > new Date(prev.updated_at) ? current : prev
-            ));
-
-            const repositoryId = latestArtifact.workflow_run.repository_id;
-            console.log(`Repository ID for ${searchName}: ${repositoryId}`);
-            const archivedownloadurl = latestArtifact.workflow_run.archive_download_url;
-            console.log(`Repository ID for ${searchName}: ${rarchivedownloadurl}`);
-            
-            // アーティファクトをダウンロード
-            curl -L \
-              -H "Accept: application/vnd.github.v3+json" \
-              -H "Authorization: Bearer ${YOUR_PAT}" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              -o artifacts.zip \
-              "https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts/${repositoryId}/zip"
-          } else {
-            console.log(`No matching artifacts found for ${searchName}`);
-          }
+          # archive_download_urlからアーティファクトをダウンロード
+          curl -L -o artifacts.zip "$archive_download_url"
           ls -lh
         continue-on-error: true  # 初回で成果物がない場合エラーを許可します
       - name: Unzip Artifact
