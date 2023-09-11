@@ -3,7 +3,7 @@
 for filename in ./content/voicevox/*.txt
 do
     # ファイルが変更されたかどうかを確認
-    if git diff --quiet --exit-code "$filename"; then
+    if git diff --quiet HEAD^ "$filename"; then
         echo "No changes in $filename, skipping..."
     else
         echo "Processing $filename..."
