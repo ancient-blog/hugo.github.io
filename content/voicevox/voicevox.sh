@@ -1,13 +1,9 @@
 #!/bin/bash
-git log -n 3
-changed_files=$(git log --stat -1 --pretty=format:"" )
-echo "変更されたファイル:"
-echo "$changed_files"
-changed_files=$(git log --stat -1 --pretty=format:"" | grep -E 'content/voicevox/[^/]+\.txt')
+changed_files=$(git log --stat -1 --pretty=format:"" | grep -o 'content/voicevox/[^/]+\.txt')
 echo "変更されたファイル:"
 echo "$changed_files"
 
-for filename in ./content/voicevox/*.txt
+for filename in $changed_files
 do
 
 
@@ -16,7 +12,7 @@ do
         -X POST \
         "localhost:50021/audio_query?speaker=3" \
         --get --data-urlencode text@"$filename" \
-        > query.json
+        -o query.json
 
     echo "Created query.json for $filename"
     
@@ -28,7 +24,7 @@ do
         -X POST \
         -d @query.json \
         "localhost:50021/synthesis?speaker=3" \
-        > audio.wav
+        -o audio.wav
 
     echo "Created audio.wav for $filename"
     
