@@ -3,7 +3,7 @@ git log -n 3
 changed_files=$(git log --stat -1 --pretty=format:"" )
 echo "変更されたファイル:"
 echo "$changed_files"
-changed_files=$(git log --stat -1 --pretty=format:"" | grep -E 'content/voicevox/[^/]+')
+changed_files=$(git log --stat -1 --pretty=format:"" | grep -E 'content/voicevox/[^/]+\.txt')
 echo "変更されたファイル:"
 echo "$changed_files"
 
