@@ -1,6 +1,9 @@
 #!/bin/bash
 git log -n 3
-changed_files=$(git log --stat -1 --pretty=format:"" | grep -E '^\s+\w+\s+\|\s+(.*\.[a-zA-Z0-9]+)\s+\|')
+changed_files=$(git log --stat -1 --pretty=format:"" )
+echo "変更されたファイル:"
+echo "$changed_files"
+changed_files=$(git log --stat -1 --pretty=format:"" | grep -E 'content/voicevox/[^/]+')
 echo "変更されたファイル:"
 echo "$changed_files"
 

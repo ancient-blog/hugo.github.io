@@ -75,7 +75,7 @@ jobs:
       - name: Run the Shell Script
         run: |
           ./voicevox.sh
-          ls -l
+          ls -lh
 
       - name: Copy Files
         run: |
@@ -84,6 +84,7 @@ jobs:
           else
             echo "No .wav files found. Skipping copy."
           fi
+          ls ${ARTIFACT} -lh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
