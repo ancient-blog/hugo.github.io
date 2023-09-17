@@ -1,5 +1,5 @@
 #!/bin/bash
-changed_files=$(git log --stat -1 --pretty=format:"" | grep -o 'content/voicevox/[^/]+\.txt')
+changed_files=$(git log --stat -1 --pretty=format:"" | grep -o -E 'content/voicevox/[^/]+\.txt')
 echo "変更されたファイル:"
 echo "$changed_files"
 
