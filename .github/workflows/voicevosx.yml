@@ -20,7 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+        with:
+          fetch-depth: 5
       - name: Install jq
         run: |
           sudo apt-get update
@@ -69,8 +70,8 @@ jobs:
 
       - name: Run the Shell Script
         run: |
-          git log --pretty=oneline -10
-          git log --stat -1 --pretty=format:""
+          git log --pretty=oneline -5
+          git diff --name-only HEAD
           changed_files=$(git log --stat -1 --pretty=format:"" | grep -o -E 'content/voicevox/[^/]+\.txt')
           echo "変更されたファイル:"
           echo "$changed_files"
