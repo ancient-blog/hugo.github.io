@@ -108,7 +108,7 @@ jobs:
             echo "Renamed audio.wav to ${filename_without_extension}.wav"
 
             echo "Finished processing $filename"
-        done
+          done
 
       - name: Copy Files
         run: |
