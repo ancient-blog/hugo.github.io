@@ -67,11 +67,6 @@ jobs:
             mkdir -p "${ARTIFACT}"
           fi
 
-#      - name: Prepare a Shell Script
-#        run: |
-#          mv ./content/voicevox/voicevox.sh .
-#          chmod +x voicevox.sh
-
       - name: Run the Shell Script
         run: |
           git log --pretty=oneline -10
