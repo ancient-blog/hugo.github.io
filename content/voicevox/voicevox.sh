@@ -25,11 +25,10 @@ do
         -d @query.json \
         "localhost:50021/synthesis?speaker=3" \
         -o audio.wav
-
+    root_d=$(ls -lh)
+    echo "$root_d"
     echo "Created audio.wav for $filename"
     
-    rm query.json
-
     # 拡張子.txtを削除して新しい変数に格納
     filename_without_extension=$(echo "$filename" | sed 's/\.txt$//')
 
