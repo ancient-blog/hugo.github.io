@@ -44,8 +44,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${YOUR_PAT}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            ${archive_download_url} \ 
-            -o artifacts.zip
+            ${archive_download_url} > artifacts.zip
           ls -lh
         continue-on-error: true  # 初回で成果物がない場合エラーを許可します
       - name: Unzip Artifact
