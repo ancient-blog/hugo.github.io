@@ -74,7 +74,7 @@ jobs:
 
       - name: Run the Shell Script
         run: |
-          git log -1
+          git log --pretty=oneline -10
           git log --stat -1 --pretty=format:""
           changed_files=$(git log --stat -1 --pretty=format:"" | grep -o -E 'content/voicevox/[^/]+\.txt')
           echo "変更されたファイル:"
@@ -88,7 +88,6 @@ jobs:
               "localhost:50021/audio_query?speaker=3" \
               --get --data-urlencode text@"$filename" \
               -o query.json
-            ls -lh
             echo "Created query.json for $filename"
     
             cat query.json | grep -o -E "\"kana\":\".*\"" | xargs -I {} echo {}
@@ -99,8 +98,7 @@ jobs:
               -X POST \
               -d @query.json \
               "localhost:50021/synthesis?speaker=3" \
-              -o audio.wav
-            ls -lh   
+              -o audio.wav   
             # 拡張子.txtを削除して新しい変数に格納
             filename_without_extension=$(echo "$filename" | sed 's/\.txt$//')
 
