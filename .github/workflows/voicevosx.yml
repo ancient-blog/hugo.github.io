@@ -74,6 +74,8 @@ jobs:
 
       - name: Run the Shell Script
         run: |
+          git log -1
+          git log --stat -1 --pretty=format:""
           changed_files=$(git log --stat -1 --pretty=format:"" | grep -o -E 'content/voicevox/[^/]+\.txt')
           echo "変更されたファイル:"
           echo "$changed_files"
