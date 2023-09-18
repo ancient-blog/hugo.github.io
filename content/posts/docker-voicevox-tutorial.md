@@ -152,12 +152,12 @@ content/voicevox/フォルダ内で差分のあるテキストファイルを音
 
 ### test.wav
 
-{{< audio src="/content/voicevox/test.wav" >}}
+{{< audio src="https://ancient-blog.github.io/hugo.github.io/voicevox/test.wav" >}}
 
 ### test1.wav
 
-{{< audio src="/content/voicevox/test1.wav" >}}
+{{< audio src="https://ancient-blog.github.io/hugo.github.io/voicevox/test1.wav" >}}
 
 ### test2.wav
 
-{{< audio src="/content/voicevox/test2.wav" >}}
+{{< audio src="https://ancient-blog.github.io/hugo.github.io/voicevox/test2.wav" >}}
