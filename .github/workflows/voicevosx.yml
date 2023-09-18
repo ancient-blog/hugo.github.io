@@ -4,7 +4,7 @@ on:
   workflow_call:
   push:
     paths:
-      - 'content/voicevox/**'
+      - 'content/voicevox/[^/]+\.txt'
 env:
   ARTIFACT: artifact
   VOICEVOX_PATH: content/voicevox
