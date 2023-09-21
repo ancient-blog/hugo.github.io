@@ -1,0 +1,23 @@
+name: Download the latest audio artifacts for test 
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["topic/#20"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Child Workflow
+        uses: actions/workflow-dispatch@v2
+        with:
+          workflow: download-latest-artifact
+          inputs: |
+            YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
+            YOUR_OWNER: ancient-blog
+            YOUR_REPO: hugo.github.io
+            YOUR_ARTIFACT_NAME: plant-uml-image
+      - name: Display structure of downloaded files
+        run: ls -l
+        working-directory: ${{ github.workspace }}/
