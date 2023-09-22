@@ -11,8 +11,6 @@ jobs:
     with:  
       username: testname
 
-
-jobs:
   test:
     uses: ./.github/workflows/download-latest-artifact.yml
     with:
