@@ -17,3 +17,5 @@ jobs:
       YOUR_OWNER: ancient-blog
       YOUR_REPO: hugo.github.io
       YOUR_ARTIFACT_NAME: voicevox-data
+    secrets:
+      YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"

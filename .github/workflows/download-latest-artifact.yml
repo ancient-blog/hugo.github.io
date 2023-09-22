@@ -17,9 +17,15 @@ on:
         default: 'voicevox-data'
         required: false
         type: string
+    secrets:
+      YOUR_PAT:
+        description: 'A personal access token from the caller workflow'
+        required: false
+
+
 
 env:
-  YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
+  YOUR_PAT: ${{ secrets.YOUR_PAT}}
 
 
 jobs:
