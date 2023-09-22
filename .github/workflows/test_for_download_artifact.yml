@@ -7,15 +7,12 @@ on:
 
 jobs:
   test:
-    - name: Trigger Child Workflow
-      uses: ./.github/workflows/download-latest-artifact.yml
-      with:
-        workflow: download-latest-artifact
-        inputs: |
-          YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
-          YOUR_OWNER: ancient-blog
-          YOUR_REPO: hugo.github.io
-          YOUR_ARTIFACT_NAME: plant-uml-image
-    - name: Display structure of downloaded files
-      run: ls -l
-      working-directory: ${{ github.workspace }}/
+  - name: Trigger Child Workflow
+    uses: ./.github/workflows/download-latest-artifact.yml
+    with:
+      workflow: download-latest-artifact
+      inputs: |
+        YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
+        YOUR_OWNER: ancient-blog
+        YOUR_REPO: hugo.github.io
+        YOUR_ARTIFACT_NAME: plant-uml-image
