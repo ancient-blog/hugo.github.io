@@ -16,4 +16,4 @@ jobs:
     with:
       YOUR_OWNER: ancient-blog
       YOUR_REPO: hugo.github.io
-      YOUR_ARTIFACT_NAME: plant-uml-image
+      YOUR_ARTIFACT_NAME: voicevox-data
