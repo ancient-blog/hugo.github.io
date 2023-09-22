@@ -14,7 +14,7 @@ jobs:
   test:
     uses: ./.github/workflows/download-latest-artifact.yml
     with:
-      YOUR_PAT: secrets.ANCIENT_BLOG_PAT
+      YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
       YOUR_OWNER: ancient-blog
       YOUR_REPO: hugo.github.io
       YOUR_ARTIFACT_NAME: plant-uml-image
