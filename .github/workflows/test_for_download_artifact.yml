@@ -6,12 +6,16 @@ on:
     branches: ["topic/#20"]
 
 jobs:
-  test:
-    uses: ./.github/workflows/download-latest-artifact.yml
-    with:
-      workflow: download-latest-artifact
-      inputs: |
-        YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
-        YOUR_OWNER: ancient-blog
-        YOUR_REPO: hugo.github.io
-        YOUR_ARTIFACT_NAME: plant-uml-image
+  Reuse:
+    uses: ./.github/workflows/callee.yml
+
+#jobs:
+#  test:
+#    uses: ./.github/workflows/download-latest-artifact.yml
+#    with:
+#      workflow: download-latest-artifact
+#      inputs: |
+#        YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
+#        YOUR_OWNER: ancient-blog
+#        YOUR_REPO: hugo.github.io
+#        YOUR_ARTIFACT_NAME: plant-uml-image
