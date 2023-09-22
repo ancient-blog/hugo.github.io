@@ -5,12 +5,6 @@ on:
   push:
     branches: ["topic/#20"]
 
-jobs:
-  Reuse:
-    uses: ./.github/workflows/callee.yml
-    with:  
-      username: testname
-
   test:
     uses: ./.github/workflows/download-latest-artifact.yml
     with:
