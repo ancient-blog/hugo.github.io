@@ -8,9 +8,8 @@ on:
 jobs:
   Reuse:
     uses: ./.github/workflows/callee.yml
-    with:
-      inputs: |
-        username: testname
+    with:  
+      username: testname
 
 
 #jobs:
