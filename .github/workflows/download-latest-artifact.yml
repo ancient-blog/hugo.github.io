@@ -48,7 +48,7 @@ jobs:
             https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts \
             -o artifacts.json
           # GitHub APIからarchive_download_urlを取得し、日付でソートして最新のアーティファクトを取得
-          result = $(cat artifacts.json | jq -r '.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")')
+          result=$(cat artifacts.json | jq -r '.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")')
           echo "$result"
           archive_download_url=$(cat artifacts.json | jq -r '.artifacts | select(.name == "'"${YOUR_ARTIFACT_NAME}"'") | sort_by(.created_at | tostring) | reverse | .[0].archive_download_url')
           echo ${archive_download_url}
