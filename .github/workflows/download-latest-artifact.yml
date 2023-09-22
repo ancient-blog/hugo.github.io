@@ -18,6 +18,10 @@ on:
         required: false
         type: string
 
+env:
+  YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT}}
+
+
 jobs:
   download_latest_artifacts:
     runs-on: ubuntu-latest
@@ -30,14 +34,13 @@ jobs:
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.ANCIENT_BLOG_PAT }}" \
+            -H "Authorization: Bearer ${YOUR_PAT}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/${{ inputs.YOUR_OWNER }}/${{ inputs.YOUR_REPO }}/actions/artifacts \
             -o artifacts.json
           cat artifacts.json
           # GitHub APIからarchive_download_urlを取得し、日付でソートして最新のアーティファクトを取得
           archive_download_url=$(cat artifacts.json | jq -r '.artifacts[] | select(.name == "'"${{ inputs.YOUR_ARTIFACT_NAME }}"'") | sort_by(.created_at) | reverse | .[0].archive_download_url')
-
           if [ -z "$archive_download_url" ]; then
             echo "No matching artifacts found for ${{ inputs.YOUR_ARTIFACT_NAME }}"
             exit 1
