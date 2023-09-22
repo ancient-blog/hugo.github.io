@@ -7,7 +7,6 @@ on:
 
 jobs:
   test:
-  - name: Trigger Child Workflow
     uses: ./.github/workflows/download-latest-artifact.yml
     with:
       workflow: download-latest-artifact
