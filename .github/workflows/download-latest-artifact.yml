@@ -3,10 +3,26 @@ name: Download the latest artifacts with artifact name.
 on:
   workflow_call:
     inputs:
-      YOUR_PAT: YOUR_PAT                      # secrets.ANCIENT_BLOG_PAT
-      YOUR_OWNER: YOUR_OWNER                  # ancient-blog
-      YOUR_REPO: YOUR_REPO                    # hugo.github.io
-      YOUR_ARTIFACT_NAME: YOUR_ARTIFACT_NAME
+      YOUR_PAT:
+        description: 'Personal access token'
+        default: 'secrets.ANCIENT_BLOG_PAT'
+        required: false
+        type: string
+      YOUR_OWNER:
+        description: 'Your owner'
+        default: 'ancient-blog'
+        required: false
+        type: string
+      YOUR_REPO:
+        description: 'Your repository'
+        default: 'hugo.github.io'
+        required: false
+        type: string
+      YOUR_ARTIFACT_NAME:
+        description: 'Your Artifact name'
+        default: 'plant-uml-image'
+        required: false
+        type: string
 
 jobs:
   download_latest_artifacts:
