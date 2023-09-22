@@ -48,12 +48,15 @@ jobs:
             https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts \
             -o artifacts.json
           # GitHub APIからarchive_download_urlを取得し、日付でソートして最新のアーティファクトを取得
-          result=$(cat artifacts.json | jq -r '.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")')
-          echo ${result}
+          # 1. アーティファクトをファイルに保存
+          cat $(cat artifacts.json | jq -r '.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")') > result.json
+          cat result.json
+          # 2. 保存したファイルから archive_download_url を取得
+          archive_download_url=$(cat result.json | jq -r '.created_at |= (strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) | sort_by(.created_at) | reverse | .[0].archive_download_url')
+
+
           #archive_download_url=$(cat artifacts.json | jq -r '.artifacts | select(.name == "'"${YOUR_ARTIFACT_NAME}"'") | sort_by(.created_at) | reverse | .[0].archive_download_url')
           #echo ${archive_download_url}
-          archive_download_url=$(cat artifacts.json | jq -r '.artifacts."'${YOUR_ARTIFACT_NAME}'" | sort_by(.created_at) | reverse | .[0].archive_download_url')
-          echo ${archive_download_url}
 
           if [ -z "$archive_download_url" ]; then
             echo "No matching artifacts found for ${YOUR_ARTIFACT_NAME}"
