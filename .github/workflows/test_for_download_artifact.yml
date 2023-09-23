@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: download latest artifact
-        uses: ./.github/workflows/download-latest-artifact.yml
+        uses: ancient-blog/hugo.github.io/.github/workflows/download-latest-artifact.yml@topic/#20
         with:
           YOUR_OWNER: ancient-blog
           YOUR_REPO: hugo.github.io
