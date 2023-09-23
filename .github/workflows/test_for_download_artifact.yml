@@ -20,7 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/test
-      - uses: ancient-blog/hugo.github.io/.github/workflows/test@topic/#20
 
 
 

@@ -4,6 +4,5 @@ description: "[Test] Composite Action"
 runs:
   using: "composite"
   steps:
-    # ディレクトリ内のファイルを表示するステップを追加
-    - name: List Files
-      run: ls -lh
+    # Reference the major version of a release
+    - uses: actions/checkout@v4
