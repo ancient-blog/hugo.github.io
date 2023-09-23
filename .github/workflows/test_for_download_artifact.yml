@@ -18,12 +18,8 @@ jobs:
   composite_test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ancient-blog/hugo.github.io/.github/workflows/test.yml@topic/#20
-        with:
-          YOUR_OWNER: ancient-blog
-          YOUR_REPO: hugo.github.io
-          YOUR_ARTIFACT_NAME: voicevox-data
-        secrets:
-          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
+
 
 
