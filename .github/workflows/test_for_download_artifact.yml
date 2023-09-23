@@ -16,13 +16,12 @@ jobs:
       YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
 
   step_test:
-    - name: download latest artifact
-      uses: ancient-blog/hugo.github.io/.github/workflows/download-latest-artifact.yml@topic/#20
-      with:
-        YOUR_OWNER: ancient-blog
-        YOUR_REPO: hugo.github.io
-        YOUR_ARTIFACT_NAME: voicevox-data
-      secrets:
-        YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
+    uses: ancient-blog/hugo.github.io/.github/workflows/download-latest-artifact.yml@topic/#20
+    with:
+      YOUR_OWNER: ancient-blog
+      YOUR_REPO: hugo.github.io
+      YOUR_ARTIFACT_NAME: voicevox-data
+    secrets:
+      YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
 
 
