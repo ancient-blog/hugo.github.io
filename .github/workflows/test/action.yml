@@ -1,0 +1,12 @@
+name: "Composite Action"
+description: "[Test] Composite Action"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - name: "Hello World"
+      shell: bash
+      run: echo 'Hello World'

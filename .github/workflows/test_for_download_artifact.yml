@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ancient-blog/hugo.github.io/.github/workflows/test.yml@topic/#20
+      - uses: ancient-blog/hugo.github.io/.github/workflows/test/action.yml@topic/#20
 
 
 
