@@ -1,10 +1,17 @@
 name: "Composite Action"
 description: "[Test] Composite Action"
 
+inputs:
+  MY_MESSAGE:
+    description: "表示したいメッセージ"
+    required: true
+
 runs:
   using: "composite"
   steps:
     # ディレクトリ内のファイルを表示するステップを追加
     - name: List Files
       shell: bash
-      run: ls -lh
+      run: |
+        ls -lh
+        echo "${{ inputs.MY_MESSAGE }}"

@@ -18,9 +18,13 @@ jobs:
   composite_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/test
-#      - uses: ancient-blog/hugo.github.io/.github/workflows/test@topic/#20
+      - name: checkout
+        uses: actions/checkout@v4
+      - neme: test
+        uses: ./.github/workflows/test
+        with:
+          MY_MESSAGE: "topic/#20"
+#      - uses: ancient-blog/hugo.github.io@topic/#20
 
 
 
