@@ -29,6 +29,3 @@ jobs:
 
 #      - uses: ancient-blog/hugo.github.io@topic/#20
 
-secrets:
-  YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
-
