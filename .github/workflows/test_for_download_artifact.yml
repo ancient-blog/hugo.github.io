@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      - neme: test
+      - name: test
         uses: ./.github/workflows/test
         with:
           MY_MESSAGE: "topic/#20"
