@@ -24,6 +24,8 @@ jobs:
         uses: ./.github/workflows/test
         with:
           MY_MESSAGE: "topic/#20"
+        secrets:
+          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
 #      - uses: ancient-blog/hugo.github.io@topic/#20
 
 
