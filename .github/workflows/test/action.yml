@@ -5,10 +5,11 @@ inputs:
   MY_MESSAGE:
     description: "表示したいメッセージ"
     required: true
-  secrets:
-    YOUR_PAT:
-      description: 'A personal access token from the caller workflow'
-      required: false
+secrets:
+  YOUR_PAT:
+    description: 'A personal access token from the caller workflow'
+    required: false
+
 runs:
   using: "composite"
   steps:
