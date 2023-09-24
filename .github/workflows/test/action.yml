@@ -6,4 +6,5 @@ runs:
   steps:
     # ディレクトリ内のファイルを表示するステップを追加
     - name: List Files
+      shell: bash
       run: ls -lh
