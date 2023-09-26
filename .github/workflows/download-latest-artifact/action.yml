@@ -1,0 +1,60 @@
+name: Download the latest artifacts
+description: "Download the latest artifacts with artifact name."
+
+inputs:
+  YOUR_OWNER:
+    description: 'Your owner'
+    default: 'ancient-blog'
+    required: false
+    type: string
+  YOUR_REPO:
+    description: 'Your repository'
+    default: 'hugo.github.io'
+    required: false
+    type: string
+  YOUR_ARTIFACT_NAME:
+    description: 'Your Artifact name'
+    default: 'voicevox-data'
+    required: false
+    type: string
+  YOUR_PAT:
+    description: 'A personal access token from the caller workflow'
+    required: true
+
+env:
+  YOUR_OWNER: ${{ inputs.YOUR_OWNER }}
+  YOUR_REPO: ${{ inputs.YOUR_REPO }}
+  YOUR_ARTIFACT_NAME: ${{ inputs.YOUR_ARTIFACT_NAME }}
+  YOUR_PAT: ${{ inputs.YOUR_PAT}}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install jq
+      run: |
+        sudo apt-get update
+        sudo apt-get install jq -y
+    - name: Get Artifacts using the GitHub API
+      run: |
+        curl -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${YOUR_PAT}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/${YOUR_OWNER}/${YOUR_REPO}/actions/artifacts \
+          -o artifacts.json
+        # GitHub APIからarchive_download_urlを取得し、日付でソートして最新のアーティファクトを取得
+        cat artifacts.json | jq '[.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")]' | jq 'sort_by(.created_at) | reverse' | jq -r 'map(.name, .archive_download_url, .created_at)'| head -n5
+        archive_download_url=$(cat artifacts.json | jq '[.artifacts[] | select(.name == "'"${YOUR_ARTIFACT_NAME}"'")]' | jq  -r 'sort_by(.created_at) | reverse | .[0].archive_download_url')
+        echo ${archive_download_url}
+
+        if [ -z "$archive_download_url" ]; then
+          echo "No matching artifacts found for ${YOUR_ARTIFACT_NAME}"
+          exit 1
+        fi
+        curl -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${YOUR_PAT}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          ${archive_download_url} \
+          -o artifacts.zip
+      continue-on-error: true  # 初回で成果物がない場合エラーを許可します

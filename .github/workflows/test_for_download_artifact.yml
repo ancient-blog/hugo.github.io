@@ -24,7 +24,13 @@ jobs:
         uses: ./.github/workflows/test
         with:
           MY_MESSAGE: "topic/#20"
-          YOUR_PAT: ${{ secrets.ANCIENT_BLOG_PAT }}
-
+          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
+      - name: download latest artifact
+        uses: ./.github/workflows/download-latest-artifact
+        with:
+          YOUR_OWNER: ancient-blog
+          YOUR_REPO: hugo.github.io
+          YOUR_ARTIFACT_NAME: voicevox-data
+          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
 #      - uses: ancient-blog/hugo.github.io@topic/#20
 
