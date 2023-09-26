@@ -31,7 +31,7 @@ jobs:
           owner: ancient-blog
           repo: hugo.github.io
           name: voicevox-data
-          token: "${{ secrets.ANCIENT_BLOG_PAT}}"
+          token: "${{ secrets.ANCIENT_BLOG_PAT }}"
           path: |
             "${{ github.workspace }}/artifact"
       - name: Display structure of downloaded files
