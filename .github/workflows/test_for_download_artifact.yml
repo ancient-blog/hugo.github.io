@@ -6,14 +6,6 @@ on:
     branches: ["topic/#20"]
 
 jobs:
-  test:
-    uses: ./.github/workflows/download-latest-artifact.yml
-    with:
-      YOUR_OWNER: ancient-blog
-      YOUR_REPO: hugo.github.io
-      YOUR_ARTIFACT_NAME: voicevox-data
-    secrets:
-      YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
 
   composite_test:
     runs-on: ubuntu-latest
