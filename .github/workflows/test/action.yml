@@ -7,7 +7,7 @@ inputs:
     required: true
   YOUR_PAT:
     description: 'A personal access token from the caller workflow'
-    required: false
+    required: true
 
 runs:
   using: "composite"
@@ -18,4 +18,4 @@ runs:
       run: |
         ls -lh
         echo "${{ inputs.MY_MESSAGE }}"
-        echo "${{ secrets.YOUR_PAT}}"
+        echo "${{ inputs.YOUR_PAT}}"
