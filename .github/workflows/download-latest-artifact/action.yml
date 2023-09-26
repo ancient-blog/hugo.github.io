@@ -60,6 +60,7 @@ runs:
           -o artifacts.zip
       continue-on-error: true  # 初回で成果物がない場合エラーを許可します
     - name: Unzip Artifact
+      shell: bash
       run: |
         if [ -f artifacts.zip ]; then
           unzip artifacts.zip -d ${{ inputs.path }}
