@@ -58,6 +58,7 @@ runs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           ${archive_download_url} \
           -o artifacts.zip
+        cat artifacts.zip | head -n5
       continue-on-error: true  # 初回で成果物がない場合エラーを許可します
     - name: Unzip Artifact
       shell: bash

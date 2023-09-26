@@ -30,7 +30,7 @@ jobs:
         with:
           owner: ancient-blog
           repo: hugo.github.io
-          artifact_name: voicevox-data
+          name: voicevox-data
           token: "${{ secrets.ANCIENT_BLOG_PAT}}"
           path: |
             "${{ github.workspace }}/artifact"
