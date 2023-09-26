@@ -25,10 +25,12 @@ runs:
   using: "composite"
   steps:
     - name: Install jq
+      shell: bash
       run: |
         sudo apt-get update
         sudo apt-get install jq -y
     - name: Get Artifacts using the GitHub API
+      shell: bash
       run: |
         curl -L \
           -H "Accept: application/vnd.github+json" \
