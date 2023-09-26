@@ -28,9 +28,14 @@ jobs:
       - name: download latest artifact
         uses: ./.github/workflows/download-latest-artifact
         with:
-          YOUR_OWNER: ancient-blog
-          YOUR_REPO: hugo.github.io
-          YOUR_ARTIFACT_NAME: voicevox-data
-          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
-#      - uses: ancient-blog/hugo.github.io@topic/#20
+          owner: ancient-blog
+          repo: hugo.github.io
+          artifact_name: voicevox-data
+          token: "${{ secrets.ANCIENT_BLOG_PAT}}"
+          path: |
+            "${{ github.workspace }}/artifact"
+      - name: Display structure of downloaded files
+        run: ls -l
+        working-directory: ${{ github.workspace }}/artifact/
+
 
