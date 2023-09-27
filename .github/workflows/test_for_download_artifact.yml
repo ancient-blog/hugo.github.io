@@ -1,0 +1,33 @@
+name: Download the latest audio artifacts for test 
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["topic/#20"]
+
+jobs:
+
+  composite_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: test
+        uses: ./.github/workflows/test
+        with:
+          MY_MESSAGE: "topic/#20"
+          YOUR_PAT: "${{ secrets.ANCIENT_BLOG_PAT}}"
+      - name: download latest artifact
+        uses: ./.github/workflows/download-latest-artifact
+        with:
+          owner: ancient-blog
+          repo: hugo.github.io
+          name: voicevox-data
+          token: "${{ secrets.ANCIENT_BLOG_PAT }}"
+          path: |
+            "${{ github.workspace }}/artifact"
+      - name: Display structure of downloaded files
+        run: ls -l
+        working-directory: ${{ github.workspace }}/artifact/
+
+

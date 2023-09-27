@@ -1,0 +1,21 @@
+name: "Composite Action"
+description: "[Test] Composite Action"
+
+inputs:
+  MY_MESSAGE:
+    description: "表示したいメッセージ"
+    required: true
+  YOUR_PAT:
+    description: 'A personal access token from the caller workflow'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    # ディレクトリ内のファイルを表示するステップを追加
+    - name: List Files
+      shell: bash
+      run: |
+        ls -lh
+        echo "${{ inputs.MY_MESSAGE }}"
+        echo "${{ inputs.YOUR_PAT}}"

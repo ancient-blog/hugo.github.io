@@ -1,6 +1,6 @@
 theme = "harbor"
 baseurl = "https://ancient-blog.github.io/hugo.github.io/"
-title = "Hugo Themes"
+title = "ancient-blog"
 paginate = 3
 languageCode = "en"
 DefaultContentLanguage = "en"

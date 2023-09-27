@@ -55,6 +55,15 @@ jobs:
         with:
           path: ${{ github.workspace }}/content/images/plantuml/
           name: plant-uml-image 
+      - name: download latest voicevox-data of artifact
+        uses: ./.github/workflows/download-latest-artifact
+        with:
+          owner: ancient-blog
+          repo: hugo.github.io
+          name: voicevox-data
+          token: "${{ secrets.ANCIENT_BLOG_PAT }}"
+          path: |
+            "${{ github.workspace }}/content/images/voicevox/"
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
