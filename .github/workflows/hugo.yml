@@ -63,7 +63,7 @@ jobs:
           name: voicevox-data
           token: "${{ secrets.ANCIENT_BLOG_PAT }}"
           path: |
-            "${{ github.workspace }}/content/images/voicevox/"
+            "${{ github.workspace }}/content/voicevox/"
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
